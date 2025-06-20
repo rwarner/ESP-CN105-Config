@@ -1,0 +1,32 @@
+##########################
+######### Main ###########
+##########################
+
+substitutions:
+  device_name: living-room-mitsubishi
+  friendly_name: Living Room Mitsubishi
+  log_level: INFO
+
+esphome:
+  name: ${device_name}
+  friendly_name: "${friendly_name}"
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: esp-idf
+
+# Default logging level
+logger:
+  level: ${log_level}
+
+# Enable Home Assistant API
+api:
+  encryption: 
+    key: !secret homeassistant_api_encryption
+
+# Include external files
+<<: !include climate.yaml
+<<: !include connection.yaml
+
+# `secrets.yaml` will be included automatically
