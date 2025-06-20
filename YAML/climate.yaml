@@ -1,0 +1,75 @@
+###############################
+###### Mitsubishi CN105 #######
+###############################
+
+external_components:
+  - source: github://echavet/MitsubishiCN105ESPHome
+
+uart:
+  id: HP_UART
+  baud_rate: 2400
+  tx_pin: GPIO18 # TX goes to RX on Mitsubishi
+  rx_pin: GPIO17 # RX goes to TX on Mitsubishi
+
+# Required for the CN105 Configuration, due to compilation on
+# latest ESPHome
+sensor:
+  - platform: uptime
+    name: "${friendly_name} Uptime"
+    internal: true # Hides from Homeassistant
+
+# Climate entity configuration
+climate:
+  - platform: cn105
+    id: hp
+    name: "${friendly_name}"
+    icon: mdi:heat-pump
+    visual:
+      min_temperature: 10 # Adjust to your unit's min temp. SmartSet units can go to 10C for heating
+      max_temperature: 31
+      temperature_step:
+        target_temperature: 1
+        current_temperature: 0.5
+    # Timeout and communication settings
+    remote_temperature_timeout: 30min
+    update_interval: 2s
+    debounce_delay : 100ms
+    # Various optional sensors, not all sensors are supported by all heatpumps
+    vertical_vane_select:
+      name: Vertical Vane
+      disabled_by_default: false
+    outside_air_temperature_sensor:
+      name: Outside Air Temp
+      disabled_by_default: false
+    stage_sensor:
+      name: Stage
+      entity_category: diagnostic
+      disabled_by_default: false
+    sub_mode_sensor:
+      name: Sub Mode
+      entity_category: diagnostic
+      disabled_by_default: false
+    kwh_sensor:
+      name: Energy Usage
+      disabled_by_default: false
+    compressor_frequency_sensor:
+      name: Compressor Frequency
+      entity_category: diagnostic
+      disabled_by_default: true
+    runtime_hours_sensor:
+      name: Runtime Hours
+      entity_category: diagnostic
+      disabled_by_default: true
+    horizontal_vane_select:
+      name: Horizontal Vane
+      disabled_by_default: true
+    isee_sensor:
+      name: ISEE Sensor
+      disabled_by_default: true
+    auto_sub_mode_sensor:
+      name: Auto Sub Mode
+      entity_category: diagnostic
+      disabled_by_default: true
+    input_power_sensor:
+      name: Input Power
+      disabled_by_default: true
