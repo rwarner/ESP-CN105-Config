@@ -8,6 +8,10 @@ external_components:
 uart:
   id: HP_UART
   baud_rate: 2400
+
+  # 07/07/25
+  #   - These two pins differ from the video demonstration, these pins 
+  #     should now correctly match the soldered wires in the video.
   tx_pin: GPIO17 # TX goes to RX on Mitsubishi
   rx_pin: GPIO18 # RX goes to TX on Mitsubishi
 
